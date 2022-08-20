@@ -301,7 +301,7 @@ def _has_correct_columns(df: pd.DataFrame, labels: list) -> bool:
 
 def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     labels = ["hate_speech", "offensive", "toxic"]
-
+    
     for df in dfs:
         # 1. check: all have correct columns before merging
         for label in labels:
