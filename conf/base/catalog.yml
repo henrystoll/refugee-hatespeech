@@ -79,4 +79,21 @@ test_hatecheck:
 test_unhcr:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/unhcr.pq
-  
+
+
+train_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/train_set.pq
+
+validation_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/validation_set.pq
+
+test_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/test_set.pq
+
+training_set_oversampled:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/training_set_oversampled.pq
+

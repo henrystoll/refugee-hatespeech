@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
 
+# TODO: add to config
 def split_stratified_into_train_val_test(
     df: pd.DataFrame,
     stratify_cols=["label"],

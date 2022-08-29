@@ -23,7 +23,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=oversample,
                 inputs="training_set",
-                outputs="os_training_set",
+                outputs="training_set_oversampled",
                 name="oversampling_the_training_set",
             ),
         ]

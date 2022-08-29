@@ -317,22 +317,22 @@ def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     # 2. check test if there are the correct amount of datasets
     # assert len(combined["dataset"].unique()) == 12
 
+    print("dropping NaN...")
     combined = combined.dropna(axis=0)
-    print("dropped NaN")
+    print("reseting index...")
     combined = combined.reset_index(drop=True)
-    print("reset index")
+    print("binarizing labels...")
     combined = _binarize_labels(combined, labels)
-    print("binarized labels")
+    print("cleaning text...")
     combined["text"] = _clean_text(combined["text"])
-    print("cleaned text")
 
-    # checks
-    # 1. X has correct columns
-    # 2. X remove nans
-    # 3. all labels are binary
 
     # create label columns
+    combined["label"] = [2 if hs > 0 else 1 if off > 0 else 0 if tox > 0 else 0 for hs, off, tox in
+                  zip(combined['hate_speech'], combined['offensive'], combined['toxic'])]
 
+    # drop unnecessary columns
+    combined = combined.drop(["hate_speech", "offensive", "toxic"], axis=1)
     return combined
 
 
