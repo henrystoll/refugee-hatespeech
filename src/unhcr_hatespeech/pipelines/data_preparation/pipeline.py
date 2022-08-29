@@ -16,7 +16,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=split_stratified_into_train_val_test,
-                inputs=["model_input_combined", "label"],
+                inputs="model_input_combined",
                 outputs=["training_set", "validation_set", "test_set"],
                 name="split_combined_input_dataset_into_train_val_and_test_set",
             ),

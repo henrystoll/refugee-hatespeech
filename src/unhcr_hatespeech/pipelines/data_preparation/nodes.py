@@ -8,7 +8,7 @@ from sklearn.utils import shuffle
 from functools import partial
 
 def split_stratified_into_train_val_test(df: pd.DataFrame,
-                                         stratify_cols=[],
+                                         stratify_cols=["label"],
                                          frac_train=0.6, 
                                          frac_val=0.15, 
                                          frac_test=0.25, 
