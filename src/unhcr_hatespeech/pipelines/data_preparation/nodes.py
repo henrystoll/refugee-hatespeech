@@ -1,11 +1,6 @@
-from functools import partial
-from typing import Dict
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-
-from functools import partial
 
 
 def split_stratified_into_train_val_test(
@@ -84,7 +79,7 @@ def split_stratified_into_train_val_test(
 def oversample(
     df: pd.DataFrame,
     # TODO: make input
-    oversample_counts: Dict = {
+    oversample_counts: dict = {
         "dynhs": 1,
         "cad": 4,
         "hatemmoji": 5,
