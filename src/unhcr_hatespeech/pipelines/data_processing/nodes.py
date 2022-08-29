@@ -1,8 +1,4 @@
 from functools import partial
-
-import pandas as pd
-
-from functools import partial
 import pandas as pd
 import emoji
 
@@ -38,7 +34,7 @@ def _clean_text(
 
     if user_mention:
         # User mention
-        replace('@[A-Za-z0-9._!"#%£$&/{}()=?´*><\|:;]+', "@USER")
+        replace(r'@[A-Za-z0-9._!"#%£$&/{}()=?´*><\|:;]+', "@USER")
         replace("<user>", "@USER")
 
     if url:
@@ -54,13 +50,13 @@ def _clean_text(
         )
 
     if linebreak:
-        replace("\[linebreak\]", "")
+        replace(r"\[linebreak\]", "")
 
     if blank_spaces:
-        replace("\s+", " ")
+        replace(r"\s+", " ")
 
     if new_line:
-        replace("\n", "")
+        replace(r"\n", "")
 
     return data
 
@@ -235,7 +231,9 @@ def preprocess_slur(raw: pd.DataFrame) -> pd.DataFrame:
 
 def preprocess_ousid(raw: pd.DataFrame) -> pd.DataFrame:
     multi_labels = raw["sentiment"].unique()
-    label_collection = list(set(l for label in multi_labels for l in label.split("_")))
+    label_collection = list(
+        set(lab for label in multi_labels for lab in label.split("_"))
+    )
 
     def extract_labels(data, labels):
         for label in labels:
@@ -285,13 +283,15 @@ def _has_binary_labels(df: pd.DataFrame, labels: list) -> bool:
 
 def _binarize_labels(combined: pd.DataFrame, labels: list) -> pd.DataFrame:
     """
-    set all summed up values to one, because if a value is > 1 -> 1. This can be the case if a label has two classes in the original dataset that are considered the same class in standardized set
+    set all summed up values to one, because if a value is > 1 -> 1.
+    This can be the case if a label has two classes in the original
+    dataset that are considered the same class in standardized set
     """
     min_to_one = partial(min, 1)
     combined[labels] = combined[labels].applymap(min_to_one)
-
     # check if all labels are binary
     # assert _has_binary_labels(combined, labels)
+    return combined
 
 
 def _has_correct_columns(df: pd.DataFrame, labels: list) -> bool:
@@ -301,7 +301,7 @@ def _has_correct_columns(df: pd.DataFrame, labels: list) -> bool:
 
 def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     labels = ["hate_speech", "offensive", "toxic"]
-    
+
     for df in dfs:
         # 1. check: all have correct columns before merging
         for label in labels:
@@ -309,13 +309,13 @@ def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
             if label not in df.columns:
                 df[label] = 0
         if not _has_correct_columns(df, labels):
-            raise KeyError(f"{df['dataset']} is missing columns") 
+            raise KeyError(f"{df['dataset']} is missing columns")
+
     print("all datasets have correct columns")
     combined = pd.concat(dfs)
     print("concatenated all datasets")
     # 2. check test if there are the correct amount of datasets
     # assert len(combined["dataset"].unique()) == 12
-
 
     combined = combined.dropna(axis=0)
     print("dropped NaN")
@@ -323,7 +323,6 @@ def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     print("reset index")
     combined = _binarize_labels(combined, labels)
     print("binarized labels")
-
     combined["text"] = _clean_text(combined["text"])
     print("cleaned text")
 
@@ -335,15 +334,6 @@ def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     # create label columns
 
     return combined
-
-
-def _replace_template_string(
-    data: pd.DataFrame, template: str, token: str
-) -> pd.DataFrame:
-    data = data[data["case_templ"].str.contains(template, regex=False)].copy()
-    data["test_case"] = data["case_templ"].str.replace(template, token, regex=False)
-    data["target_ident"] = "refugees"
-    return data
 
 
 def _replace_template_string(
@@ -367,9 +357,9 @@ def preprocess_hatecheck(df: pd.DataFrame) -> pd.DataFrame:
         "[IDENTITY_S_char_del]": "rfugee",
         "[IDENTITY_P_leet]": "r3fugee",
     }
-    
+
     df_templates = df.drop_duplicates(subset=["templ_id"])
-    
+
     refugee_dfs = [
         _replace_template_string(df_templates, template, token)
         for template, token in tokens.items()

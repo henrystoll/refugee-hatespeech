@@ -3,7 +3,10 @@ from typing import Dict
 
 from kedro.pipeline import Pipeline, pipeline
 
-from unhcr_hatespeech.pipelines import data_processing as dp, data_preparation as data_prep
+from unhcr_hatespeech.pipelines import (
+    data_processing as dp,
+    data_preparation as data_prep,
+)
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -17,8 +20,8 @@ def register_pipelines() -> Dict[str, Pipeline]:
     data_preparation_pipeline = data_prep.create_pipeline()
 
     return {
-        # "__default__": pipeline([]),
-        "__default__": data_processing_pipeline,
+        "__default__": pipeline([data_processing_pipeline, data_preparation_pipeline]),
+        # "__default__": data_processing_pipeline,
         "dp": data_processing_pipeline,
         "data_prep": data_preparation_pipeline,
     }
