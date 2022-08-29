@@ -14,17 +14,19 @@ from .nodes import (
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
         [
-            node(
-                func=split_stratified_into_train_val_test,
-                inputs=["model_input_combined", ["label"]],
-                outputs=["training_set", "validation_set", "test_set"],
-                name="Split Combined Input Dataset into Train, Val, and Test",
-            ),
+            # node(
+            #     func=split_stratified_into_train_val_test,
+            #     inputs=["model_input_combined", ["label"]],
+            #     outputs=["training_set", "validation_set", "test_set"],
+            #     # name="Split Combined Input Dataset into Train Val and Test Set",
+            #     name="Split",
+            # ),
             node(
                 func=oversample,
                 inputs="training_set",
                 outputs="os_training_set",
-                name="Oversampling the Training Set",
+                # name="Oversampling the Training Set",
+                name="Oversampling",
             )
         ]
     )
