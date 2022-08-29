@@ -1,8 +1,4 @@
 from functools import partial
-
-import pandas as pd
-
-from functools import partial
 import pandas as pd
 import emoji
 
