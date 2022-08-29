@@ -289,9 +289,9 @@ def _binarize_labels(combined: pd.DataFrame, labels: list) -> pd.DataFrame:
     """
     min_to_one = partial(min, 1)
     combined[labels] = combined[labels].applymap(min_to_one)
-
     # check if all labels are binary
     # assert _has_binary_labels(combined, labels)
+    return combined
 
 
 def _has_correct_columns(df: pd.DataFrame, labels: list) -> bool:
@@ -301,7 +301,7 @@ def _has_correct_columns(df: pd.DataFrame, labels: list) -> bool:
 
 def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     labels = ["hate_speech", "offensive", "toxic"]
-    
+
     for df in dfs:
         # 1. check: all have correct columns before merging
         for label in labels:
@@ -309,13 +309,13 @@ def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
             if label not in df.columns:
                 df[label] = 0
         if not _has_correct_columns(df, labels):
-            raise KeyError(f"{df['dataset']} is missing columns") 
+            raise KeyError(f"{df['dataset']} is missing columns")
+
     print("all datasets have correct columns")
     combined = pd.concat(dfs)
     print("concatenated all datasets")
     # 2. check test if there are the correct amount of datasets
     # assert len(combined["dataset"].unique()) == 12
-
 
     combined = combined.dropna(axis=0)
     print("dropped NaN")
@@ -323,7 +323,6 @@ def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     print("reset index")
     combined = _binarize_labels(combined, labels)
     print("binarized labels")
-
     combined["text"] = _clean_text(combined["text"])
     print("cleaned text")
 
@@ -367,9 +366,9 @@ def preprocess_hatecheck(df: pd.DataFrame) -> pd.DataFrame:
         "[IDENTITY_S_char_del]": "rfugee",
         "[IDENTITY_P_leet]": "r3fugee",
     }
-    
+
     df_templates = df.drop_duplicates(subset=["templ_id"])
-    
+
     refugee_dfs = [
         _replace_template_string(df_templates, template, token)
         for template, token in tokens.items()

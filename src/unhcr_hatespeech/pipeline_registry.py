@@ -3,7 +3,10 @@ from typing import Dict
 
 from kedro.pipeline import Pipeline, pipeline
 
-from unhcr_hatespeech.pipelines import data_processing as dp, data_preparation as data_prep
+from unhcr_hatespeech.pipelines import (
+    data_processing as dp,
+    data_preparation as data_prep,
+)
 
 
 def register_pipelines() -> Dict[str, Pipeline]:

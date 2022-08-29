@@ -25,6 +25,6 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs="training_set",
                 outputs="os_training_set",
                 name="oversampling_the_training_set",
-            )
+            ),
         ]
     )
