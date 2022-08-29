@@ -15,6 +15,27 @@ In order to get the best out of the template:
 * Don't commit data to your repository
 * Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
 
+## How to install kedro on a Windows Machine
+1. Create a new conda environment
+2. Install kedro with the following command 
+
+``` bash
+conda install -c conda-forge kedro
+```
+3. Verify the installation
+``` bash
+kedro info
+```
+4. To visualize the pipelines install kedro viz
+``` bash
+pip install kedro-viz
+```
+5. Install the following such that kedro works with Parquet datasets
+``` bash
+pip install "kedro[pandas.ParquetDataSet]"
+```
+
+
 ## How to install dependencies
 
 Declare any dependencies in
