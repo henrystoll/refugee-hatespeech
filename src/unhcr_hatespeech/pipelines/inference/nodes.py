@@ -20,11 +20,11 @@ def download_classifier(classifier_identifier: str = "unhcr/hatespeech-detection
     )
 
 
-def run_interference(data: pd.DataFrame, text_col: str = "text") -> pd.DataFrame:
+def run_inference(data: pd.DataFrame, text_col: str = "text") -> pd.DataFrame:
     tokenizer = download_classifier()
     classifier = download_classifier()
 
-    interference_pipeline = pipeline(
+    inference_pipeline = pipeline(
         task="text-classification",
         tokenizer=tokenizer,
         model=classifier,
@@ -35,5 +35,5 @@ def run_interference(data: pd.DataFrame, text_col: str = "text") -> pd.DataFrame
         truncation=True,
     )
 
-    preds = interference_pipeline(data[text_col].tolist())
+    preds = inference_pipeline(data[text_col].tolist())
     return pd.DataFrame(map(lambda x: {d["label"]: d["score"] for d in x}, preds))

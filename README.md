@@ -166,7 +166,7 @@ To automatically strip out all output cell contents before committing to `git`, 
 ## TODOs
 
 * [ ] push dataset to huggingface
-* [ ] pull model from hugginface and run interference
+* [ ] pull model from hugginface and run inference
   * [ ] hatecheck
   * [ ] unhcr
 * [ ] train model: Henry
