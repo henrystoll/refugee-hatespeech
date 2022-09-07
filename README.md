@@ -83,7 +83,7 @@ To configure the coverage threshold, go to the `.coveragerc` file.
 
 To generate or update the dependency requirements for your project:
 
-```
+```bash
 kedro build-reqs
 ```
 
@@ -169,9 +169,9 @@ To automatically strip out all output cell contents before committing to `git`, 
 * [ ] pull model from hugginface and run interference
   * [ ] hatecheck
   * [ ] unhcr
+* [ ] train model: Henry
 * [ ] vizualize hatecheck (somehow) -> html / viz
-* [ ] train model
 * [ ] documentation
   * [ ] README
   * [ ] documentation
-  * [ ] presentation
+  * [ ] presentation?
