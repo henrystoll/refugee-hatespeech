@@ -1,8 +1,10 @@
 import pandas as pd
 from transformers import AutoModelForSequenceClassification, pipeline, AutoTokenizer
 
+
 def download_tokenizer(tokenizer_identifier: str = "unhcr/hatespeech-detection"):
     return AutoTokenizer.from_pretrained(tokenizer_identifier)
+
 
 def download_classifier(classifier_identifier: str = "unhcr/hatespeech-detection"):
     id2label = {
@@ -13,7 +15,10 @@ def download_classifier(classifier_identifier: str = "unhcr/hatespeech-detection
 
     label2id = {id2label[i]: i for i in id2label}
 
-    return AutoModelForSequenceClassification.from_pretrained(classifier_identifier, num_labels = 3, id2label=id2label, label2id=label2id)
+    return AutoModelForSequenceClassification.from_pretrained(
+        classifier_identifier, num_labels=3, id2label=id2label, label2id=label2id
+    )
+
 
 def run_interference(data: pd.DataFrame, text_col: str = "text") -> pd.DataFrame:
     tokenizer = download_classifier()
@@ -23,12 +28,12 @@ def run_interference(data: pd.DataFrame, text_col: str = "text") -> pd.DataFrame
         task="text-classification",
         tokenizer=tokenizer,
         model=classifier,
-        #device=0,
+        # device=0,
         return_all_scores=True,
         max_length=128,
         padding=True,
         truncation=True,
     )
-    
+
     preds = interference_pipeline(data[text_col].tolist())
     return pd.DataFrame(map(lambda x: {d["label"]: d["score"] for d in x}, preds))
