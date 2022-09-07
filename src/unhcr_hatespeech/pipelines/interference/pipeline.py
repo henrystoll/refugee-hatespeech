@@ -28,7 +28,6 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs="test_hatecheck",
                 outputs="hatecheck_predictions",
                 name="run_interference_hatecheck",
-            )
-
+            ),
         ]
     )

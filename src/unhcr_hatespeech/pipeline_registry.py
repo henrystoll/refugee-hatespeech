@@ -28,6 +28,5 @@ def register_pipelines() -> Dict[str, Pipeline]:
         ),
         # "__default__": data_processing_pipeline,
         "dp": data_processing_pipeline,
-
         # "interference": interference_pipeline,
     }
