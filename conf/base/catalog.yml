@@ -3,7 +3,7 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 
-
+####################### Raw Datasets ##########################
 train_cad:
   type: pandas.CSVDataSet
   filepath: data/01_raw/cad/cad_v1_1.tsv
@@ -64,13 +64,33 @@ raw_unhcr:
   type: pandas.ExcelDataSet
   filepath: data/01_raw/unhcr/refugee_data_unhcr.xlsx
 
-# predict_frame:
-#   type: pandas.CSVDataSet
-#   filepath:
+###################### Combined Dataset #######################
 
 model_input_combined:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/model_input_combined.pq
+
+###################### Training Datasets ######################
+
+train_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/train_set.pq
+
+training_set_oversampled:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/training_set_oversampled.pq
+
+##################### Validation Datasets #####################
+
+validation_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/validation_set.pq
+
+######################## Test Datasets ########################
+
+test_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/test_set.pq
 
 test_hatecheck:
   type: pandas.ParquetDataSet
@@ -80,20 +100,25 @@ test_unhcr:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/unhcr.pq
 
+##################### Prediction Datasets #####################
 
-train_set:
+test_set_predictions:
   type: pandas.ParquetDataSet
-  filepath: data/05_model_input/train_set.pq
+  filepath: data/07_model_output/test_set_predictions.pq
 
-validation_set:
+hatecheck_predictions:
   type: pandas.ParquetDataSet
-  filepath: data/05_model_input/validation_set.pq
+  filepath: data/07_model_output/hatecheck_predictions.pq
 
-test_set:
+unhcr_predictions:
   type: pandas.ParquetDataSet
-  filepath: data/05_model_input/test_set.pq
+  filepath: data/07_model_output/unhcr_predictions.pq
 
-training_set_oversampled:
-  type: pandas.ParquetDataSet
-  filepath: data/05_model_input/training_set_oversampled.pq
+
+
+
+
+
+
+
 
