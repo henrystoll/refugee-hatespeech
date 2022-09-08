@@ -7,12 +7,15 @@
 <!---
 Please describe your modular pipeline here.
 -->
+This is the modular pipeline
 
 ## Pipeline inputs
 
 <!---
 The list of pipeline inputs.
 -->
+
+12 Datasets
 
 ## Pipeline outputs
 

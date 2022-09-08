@@ -18,27 +18,27 @@ In order to get the best out of the template:
 ## How to install kedro on a Windows Machine
 
 1. Create a new conda environment
-2. Install kedro with the following command
+2. Install kedro with the following command:
 
-``` bash
+```bash
 conda install -c conda-forge kedro
 ```
 
-3. Verify the installation
+3. Verify the installation:
 
-``` bash
+```bash
 kedro info
 ```
 
-4. To visualize the pipelines install kedro viz
+4. To visualize the pipelines install kedro viz:
 
-``` bash
+```bash
 pip install kedro-viz
 ```
 
-5. Install the following such that kedro works with Parquet datasets
+5. Install the following such that kedro works with Parquet datasets:
 
-``` bash
+```bash
 pip install "kedro[pandas.ParquetDataSet]"
 ```
 
@@ -50,12 +50,12 @@ Declare any dependencies in
 
 To install them, run:
 
-``` bash
+```bash
 # pip install -r src/requirements.txt
 conda env create -f src/environment.yml
 ```
 
-To export them, run:
+TODO: To export them, run:
 
 ```bash
 conda env export > src/environment.yml
@@ -65,7 +65,7 @@ conda env export > src/environment.yml
 
 You can run your Kedro project with:
 
-``` bash
+```bash
 kedro run
 ```
 
@@ -73,7 +73,7 @@ kedro run
 
 Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
 
-``` bash
+```bash
 kedro test
 ```
 

@@ -36,13 +36,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="preprocess_cad_node",
                 namespace="raw",
             ),
-            # node(
-            #   func=preprocess_civil,
-            #  inputs="train_civil",
-            # outputs="preprocessed_civil",
-            # name="preprocess_civil_node",
-            # namespace="raw"
-            # ),
+            node(
+              func=preprocess_civil,
+             inputs="train_civil",
+            outputs="preprocessed_civil",
+            name="preprocess_civil_node",
+            namespace="raw"
+            ),
             node(
                 func=preprocess_davidson,
                 inputs="train_davidson",
@@ -117,7 +117,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 func=combine_and_clean_input,
                 inputs=[
                     "preprocessed_cad",
-                    # "preprocessed_civil",
+                    "preprocessed_civil",
                     "preprocessed_davidson",
                     "preprocessed_dynhs",
                     "preprocessed_ghc",
