@@ -37,8 +37,10 @@ raw_unhcr:
    type: pandas.ExcelDataSet
    filepath: data/01_raw/unhcr/refugee_data_unhcr.xlsx
    layer: raw    
-
 ```
+
+It is important to add such an instance for transformed datasets also. However, instead of storing them in `data/01_raw`, they needs to be stored in a different layer. For example, the datasets that are produced in the data processing pipeline are stored in `data/03_primary`.
+
 ## Kedro Node
 When adding a node to your pipeline, it needs to have the following structure.
 
