@@ -1,24 +1,33 @@
 # UNHCR Hatespeech Detection
+**Creators:** Frederik Gaasdal Jensen & Henry Alexander Stoll
 
-## Overview
+## About this Repo
+This repository is built using Kedro, which makes it possible to have a more clear structure of a project. More specifically, Kedro uses nodes and pipelines to orchestrate data flows.
 
-This is your new Kedro project, which was generated using `Kedro 0.18.1`.
+***Node:*** a Python function
 
-Take a look at the [Kedro documentation](https://kedro.readthedocs.io) to get started.
+***Pipeline:*** a sequence of nodes
 
-## Rules and guidelines
+To understand the Kedro better, take a look at [Kedro documentation](https://kedro.readthedocs.io).
 
-In order to get the best out of the template:
+This project provides **two pipelines**:
 
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://kedro.readthedocs.io/en/stable/faq/faq.html#what-is-data-engineering-convention)
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
+1. Data Processing
+2. Model Inference
 
-## How to install kedro on a Windows Machine
+### Data Processing:
+In this pipeline, all the 12 source datasets (the ones used for training the model) are loaded, preprocessed, combined, and split into train/val/test.
+
+The Hatecheck and UNHCR datasets are also loaded and preprocessed in this pipeline.
+
+### Model Inference:
+This pipeline downloads a tokenizer and transformer model, which are used to calculate predictions.
+
+
+## How to install Kedro on a Windows Machine?
 
 1. Create a new conda environment
-2. Install kedro with the following command:
+2. Install Kedro with the following command:
 
 ```bash
 conda install -c conda-forge kedro
@@ -30,7 +39,7 @@ conda install -c conda-forge kedro
 kedro info
 ```
 
-4. To visualize the pipelines install kedro viz:
+4. To visualize the pipelines, install kedro viz:
 
 ```bash
 pip install kedro-viz
@@ -44,8 +53,7 @@ pip install "kedro[pandas.ParquetDataSet]"
 
 ## How to install dependencies
 
-Declare any dependencies in
-<!-- `src/requirements.txt` for `pip` installation and  -->
+Declare any dependencies in <!-- `src/requirements.txt` for `pip` installation and  -->
 `src/environment.yml` for `conda` installation.
 
 To install them, run:
@@ -69,17 +77,13 @@ You can run your Kedro project with:
 kedro run
 ```
 
-## How to test your Kedro project
-
-Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
+If you want to run a specific pipeline:
 
 ```bash
-kedro test
+kedro run -p pipeline_name
 ```
 
-To configure the coverage threshold, go to the `.coveragerc` file.
-
-## Project dependencies
+## Project Dependencies (Using Kedro)
 
 To generate or update the dependency requirements for your project:
 
@@ -92,6 +96,22 @@ This will `pip-compile` the contents of `src/requirements.txt` into a new file `
 After this, if you'd like to update your project requirements, please update `src/requirements.txt` and re-run `kedro build-reqs`.
 
 [Further information about project dependencies](https://kedro.readthedocs.io/en/stable/kedro_project_setup/dependencies.html#project-specific-dependencies)
+
+## Project Dependencies (Without using Kedro)
+Another way to do this without Kedro is with the following command. 
+
+```bash
+pip install -r src/requirements.txt
+```
+
+## Build Documentation
+The documentation for this project can be built using the below command.
+
+```bash
+kedro build-docs
+```
+When this command has finished running, you will need to copy the path to the root folder of the project and add `docs/build/html/unhcr_hatespeech.html` to the path. This should then be inserted into your Web Browser, which will open the documentation in HTML format. 
+
 
 ## How to work with Kedro and notebooks
 
@@ -135,33 +155,7 @@ And if you want to run an IPython session:
 kedro ipython
 ```
 
-### How to convert notebook cells to nodes in a Kedro project
 
-You can move notebook code over into a Kedro project structure using a mixture of [cell tagging](https://jupyter-notebook.readthedocs.io/en/stable/changelog.html#release-5-0-0) and Kedro CLI commands.
-
-By adding the `node` tag to a cell and running the command below, the cell's source code will be copied over to a Python file within `src/<package_name>/nodes/`:
-
-```bash
-kedro jupyter convert <filepath_to_my_notebook>
-```
-
-> *Note:* The name of the Python file matches the name of the original notebook.
-
-Alternatively, you may want to transform all your notebooks in one go. Run the following command to convert all notebook files found in the project root directory and under any of its sub-folders:
-
-```bash
-kedro jupyter convert --all
-```
-
-### How to ignore notebook output cells in `git`
-
-To automatically strip out all output cell contents before committing to `git`, you can run `kedro activate-nbstripout`. This will add a hook in `.git/config` which will run `nbstripout` before anything is committed to `git`.
-
-> *Note:* Your output cells will be retained locally.
-
-## Package your Kedro project
-
-[Further information about building project documentation and packaging your project](https://kedro.readthedocs.io/en/stable/tutorial/package_a_project.html)
 
 ## TODOs
 
