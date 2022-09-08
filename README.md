@@ -8,7 +8,7 @@ This repository is built using Kedro, which makes it possible to have a more cle
 
 ***Pipeline:*** a sequence of nodes
 
-To understand the Kedro better, take a look at [Kedro documentation](https://kedro.readthedocs.io).
+To understand Kedro better, take a look at [Kedro documentation](https://kedro.readthedocs.io).
 
 This project provides **two pipelines**:
 
@@ -23,14 +23,87 @@ The Hatecheck and UNHCR datasets are also loaded and preprocessed in this pipeli
 ### Model Inference:
 This pipeline downloads a tokenizer and transformer model, which are used to calculate predictions.
 
+## How to obtain the data?
+All the raw data files can be downloaded from: [Download Datasets](https://stollfamily.de/01_raw.zip).
+
+After having downloaded the data, you need to copy all the 15 folders from the `01_raw/` folder into the `data/01_raw` folder in this repo.
+
+It is important that these datasets are kept raw as the data processing pipeline expects raw datasets as input.
+
+To avoid writing paths to the datasets multiple places in the project, a `conf/base/catalog.yml` file is used as a form of dataset orchestrator. From the example below, it is possible to refer to `raw_unhcr` whenever you would like to provide that specific dataset as input to a node.
+
+```
+raw_unhcr:
+   type: pandas.ExcelDataSet
+   filepath: data/01_raw/unhcr/refugee_data_unhcr.xlsx
+   layer: raw    
+
+```
+## Kedro Node
+When adding a node to your pipeline, it needs to have the following structure.
+
+```python
+from kedro.pipeline import node
+from .nodes import run_inference
+
+node(
+    func=run_inference,
+    inputs="test_unhcr",
+    outputs="unhcr_predictions",
+    name="run_inference_unhcr",
+)
+```
+
+`func:` refers to the Python function that needs to be run.
+
+`inputs:` the inputs that are required by the Python function. In this case, it refers to the unhcr test dataset as the function only takes a DataFrame as input.
+
+`outputs:` the identifier that is written here needs to correspond to an instance in `conf/base/catalog.yml`.
+
+`name:` the name of the node.
+
+## Kedro Pipeline
+The code chunk below shows how a pipeline can be constructed.
+```python
+from kedro.pipeline import Pipeline, node, pipeline
+
+from .nodes import run_inference
+
+def create_pipeline(**kwargs) -> Pipeline:
+    return pipeline(
+        [
+            node(
+                func=run_inference,
+                inputs="test_unhcr",
+                outputs="unhcr_predictions",
+                name="run_inference_unhcr",
+            ),
+             node(
+                func=run_inference,
+                inputs="test_set",
+                outputs="test_set_predictions",
+                name="run_inference_test_set",
+             ),
+             node(
+                func=run_inference,
+                inputs="test_hatecheck",
+                outputs="hatecheck_predictions",
+                name="run_inference_hatecheck",
+             ),
+        ]
+    )
+```
+
+
 
 ## How to install Kedro on a Windows Machine?
 
-1. Create a new conda environment
-2. Install Kedro with the following command:
+1. Create a new conda environment (IMPORTANT: the Python version must be 3.9)
+
+2. The command below will install Kedro together with all the other project dependencies 
 
 ```bash
-conda install -c conda-forge kedro
+pip install -r src/requirements.txt
 ```
 
 3. Verify the installation:
@@ -39,37 +112,7 @@ conda install -c conda-forge kedro
 kedro info
 ```
 
-4. To visualize the pipelines, install kedro viz:
-
-```bash
-pip install kedro-viz
-```
-
-5. Install the following such that kedro works with Parquet datasets:
-
-```bash
-pip install "kedro[pandas.ParquetDataSet]"
-```
-
-## How to install dependencies
-
-Declare any dependencies in <!-- `src/requirements.txt` for `pip` installation and  -->
-`src/environment.yml` for `conda` installation.
-
-To install them, run:
-
-```bash
-# pip install -r src/requirements.txt
-conda env create -f src/environment.yml
-```
-
-TODO: To export them, run:
-
-```bash
-conda env export > src/environment.yml
-```
-
-## How to run your Kedro pipeline
+## How to run your Kedro project
 
 You can run your Kedro project with:
 
@@ -83,29 +126,8 @@ If you want to run a specific pipeline:
 kedro run -p pipeline_name
 ```
 
-## Project Dependencies (Using Kedro)
-
-To generate or update the dependency requirements for your project:
-
-```bash
-kedro build-reqs
-```
-
-This will `pip-compile` the contents of `src/requirements.txt` into a new file `src/requirements.lock`. You can see the output of the resolution by opening `src/requirements.lock`.
-
-After this, if you'd like to update your project requirements, please update `src/requirements.txt` and re-run `kedro build-reqs`.
-
-[Further information about project dependencies](https://kedro.readthedocs.io/en/stable/kedro_project_setup/dependencies.html#project-specific-dependencies)
-
-## Project Dependencies (Without using Kedro)
-Another way to do this without Kedro is with the following command. 
-
-```bash
-pip install -r src/requirements.txt
-```
-
 ## Build Documentation
-The documentation for this project can be built using the below command.
+The documentation for this project can be built using the command below.
 
 ```bash
 kedro build-docs
@@ -154,18 +176,3 @@ And if you want to run an IPython session:
 ```bash
 kedro ipython
 ```
-
-
-
-## TODOs
-
-* [ ] push dataset to huggingface
-* [ ] pull model from hugginface and run inference
-  * [ ] hatecheck
-  * [ ] unhcr
-* [ ] train model: Henry
-* [ ] vizualize hatecheck (somehow) -> html / viz
-* [ ] documentation
-  * [ ] README
-  * [ ] documentation
-  * [ ] presentation?
