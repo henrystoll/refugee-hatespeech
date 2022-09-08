@@ -17,17 +17,17 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="unhcr_predictions",
                 name="run_inference_unhcr",
             ),
-           # node(
+            # node(
             #    func=run_inference,
-             #   inputs="test_set",
-              #  outputs="test_set_predictions",
-               # name="run_inference_test_set",
-            #),
-            #node(
-             #   func=run_inference,
-              #  inputs="test_hatecheck",
-               # outputs="hatecheck_predictions",
-                #name="run_inference_hatecheck",
-            #),
+            #   inputs="test_set",
+            #  outputs="test_set_predictions",
+            # name="run_inference_test_set",
+            # ),
+            # node(
+            #   func=run_inference,
+            #  inputs="test_hatecheck",
+            # outputs="hatecheck_predictions",
+            # name="run_inference_hatecheck",
+            # ),
         ]
     )

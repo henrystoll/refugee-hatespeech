@@ -7,24 +7,24 @@ Preprocessing pipeline for the mapping, combining and cleaning of the different 
 Raw
 ---
 Preprocess each dataset:
-| For the (academic) datasets used as training data: map the label to normal, toxic, offensive or hate speech.
+    For the (academic) datasets used as training data: map the label to normal, toxic, offensive or hate speech.
 
 Primary
 --------
 Training Datasets:
-| Combine datasets into one training dataset.
-| Standardize labels into one `label` colummn:: 
-    0 = normal, 
-    1 = toxic, 
-    2 = hate speech
+    Combine datasets into one training dataset.
+    Standardize labels into one `label` colummn:: 
+        0 = normal, 
+        1 = toxic, 
+        2 = hate speech
 
 All Datasets:
-| Clean Text: remove URLs, emojis, special characters, etc.
+    Clean Text: remove URLs, emojis, special characters, etc.
 
 Model Input
 -----------
-| Split into train, val, test sets.
-| Oversample training set.
+    Split into train, val, test sets.
+    Oversample training set.
 
 
 Pipeline inputs
@@ -46,6 +46,7 @@ Pipeline inputs
 #. wikipedia
 
 Test Datasets:
+
 #. hatecheck
 #. unhcr
 
@@ -59,7 +60,7 @@ Training Datasets:
 
 Test Datasets:
 
-#. test_set for model evaluation and calcualting test metrics like f1 score
+#. test_set (for model evaluation and calcualting test metrics like f1 score)
 #. test_hatecheck
 #. test_unhcr
 

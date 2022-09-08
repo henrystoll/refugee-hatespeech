@@ -10,11 +10,11 @@ Pipeline inputs
 All the input datasets need to be represented as parquet datasets.
 
 The following datasets are used as input:
-| `unhcr_data`, `hatecheck_data`, `test_set` (from the train, val, test split of the combined_dataset)
+    `unhcr_data`, `hatecheck_data`, `test_set` (from the train, val, test split of the combined_dataset)
 
 Pipeline outputs
 ================
-    A Parquet dataset for each of the input datasets with the predictions.
+A Parquet dataset for each of the input datasets with the predictions.
 """
 
 from .pipeline import create_pipeline

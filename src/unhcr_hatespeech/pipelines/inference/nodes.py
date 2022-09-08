@@ -4,7 +4,7 @@ from transformers import AutoModelForSequenceClassification, pipeline, AutoToken
 # TODO: add to config
 def _download_tokenizer(tokenizer_identifier: str = "unhcr/hatespeech-detection"):
     """
-    Downloads the tokenizer that is associated 
+    Downloads the tokenizer that is associated
     with the model from https://huggingface.co/unhcr/hatespeech-detection
 
     Parameters
@@ -18,6 +18,7 @@ def _download_tokenizer(tokenizer_identifier: str = "unhcr/hatespeech-detection"
         Huggingface transformer tokenizer
     """
     return AutoTokenizer.from_pretrained(tokenizer_identifier)
+
 
 # TODO: add to config
 def _download_classifier(classifier_identifier: str = "unhcr/hatespeech-detection"):
@@ -50,11 +51,13 @@ def _download_classifier(classifier_identifier: str = "unhcr/hatespeech-detectio
     model = AutoModelForSequenceClassification.from_pretrained(
         classifier_identifier, num_labels=3, id2label=id2label, label2id=label2id
     )
-    
+
     return model, id2label
 
 
-def run_inference(data: pd.DataFrame, text_col: str = "text", local: bool = True) -> pd.DataFrame:
+def run_inference(
+    data: pd.DataFrame, text_col: str = "text", local: bool = True
+) -> pd.DataFrame:
     """
     Creates a transformer pipeline and performs inference
 
@@ -62,10 +65,10 @@ def run_inference(data: pd.DataFrame, text_col: str = "text", local: bool = True
     ----------
     data : Pandas DataFrame
         DataFrame that contains a column with text samples
-    
+
     text_col : str
         The column name of the text column
-    
+
     local : bool
         Indicates whether the inference should be run locally or not
 
@@ -81,7 +84,7 @@ def run_inference(data: pd.DataFrame, text_col: str = "text", local: bool = True
         tokenizer=tokenizer,
         model=classifier,
         # TODO: add to config
-        device= -1 if local else 0,
+        device=-1 if local else 0,
         top_k=3,
         max_length=128,
         padding=True,
@@ -95,6 +98,8 @@ def run_inference(data: pd.DataFrame, text_col: str = "text", local: bool = True
     output_df["Normal"] = preds_df["Normal"].tolist()
     output_df["Hate speech"] = preds_df["Hate speech"].tolist()
     output_df["Offensive"] = preds_df["Offensive"].tolist()
-    output_df["Predicted_Label"] = output_df[id2label.values()].idxmax(axis=1).rename("pred_label").tolist()
-   
+    output_df["Predicted_Label"] = (
+        output_df[id2label.values()].idxmax(axis=1).rename("pred_label").tolist()
+    )
+
     return output_df
