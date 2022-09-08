@@ -1,6 +1,13 @@
 """
-This is a boilerplate pipeline 'train'
-generated using Kedro 0.18.1
+Overview
+========
+
+Pipeline Inputs
+===============
+
+
+Pipeline Outputs
+================
 """
 
 from .pipeline import create_pipeline
