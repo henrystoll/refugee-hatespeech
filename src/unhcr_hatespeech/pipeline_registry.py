@@ -21,8 +21,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
 
     return {
         "__default__": pipeline(
-            # [data_processing_pipeline, , inference_pipeline]
-            [data_processing_pipeline]
+            [data_processing_pipeline, inference_pipeline]
         ),
         # "__default__": data_processing_pipeline,
         "dp": data_processing_pipeline,
