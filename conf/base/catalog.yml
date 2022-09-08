@@ -3,8 +3,13 @@
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 
+<<<<<<< HEAD
 
 raw_train_cad:
+=======
+####################### Raw Datasets ##########################
+train_cad:
+>>>>>>> 5954dc7b868f8e419c32aa5731f84837d215dcbd
   type: pandas.CSVDataSet
   filepath: data/01_raw/cad/cad_v1_1.tsv
   load_args:
@@ -78,14 +83,34 @@ raw_unhcr:
   filepath: data/01_raw/unhcr/refugee_data_unhcr.xlsx
   layer: raw
 
-# predict_frame:
-#   type: pandas.CSVDataSet
-#   filepath:
+###################### Combined Dataset #######################
 
 model_input_combined:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/model_input_combined.pq
   layer: primary
+
+###################### Training Datasets ######################
+
+train_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/train_set.pq
+
+training_set_oversampled:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/training_set_oversampled.pq
+
+##################### Validation Datasets #####################
+
+validation_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/validation_set.pq
+
+######################## Test Datasets ########################
+
+test_set:
+  type: pandas.ParquetDataSet
+  filepath: data/05_model_input/test_set.pq
 
 test_hatecheck:
   type: pandas.ParquetDataSet
@@ -97,19 +122,29 @@ test_unhcr:
   filepath: data/03_primary/unhcr.pq
   layer: primary
 
+##################### Prediction Datasets #####################
 
-train_set:
+test_set_predictions:
   type: pandas.ParquetDataSet
+<<<<<<< HEAD
   filepath: data/05_model_input/train_set.pq
   layer: model_input
+=======
+  filepath: data/07_model_output/test_set_predictions.pq
+>>>>>>> 5954dc7b868f8e419c32aa5731f84837d215dcbd
 
-validation_set:
+hatecheck_predictions:
   type: pandas.ParquetDataSet
+<<<<<<< HEAD
   filepath: data/05_model_input/validation_set.pq
   layer: model_input
+=======
+  filepath: data/07_model_output/hatecheck_predictions.pq
+>>>>>>> 5954dc7b868f8e419c32aa5731f84837d215dcbd
 
-test_set:
+unhcr_predictions:
   type: pandas.ParquetDataSet
+<<<<<<< HEAD
   filepath: data/05_model_input/test_set.pq
   layer: model_input
 
@@ -117,4 +152,15 @@ train_set_oversampled:
   type: pandas.ParquetDataSet
   filepath: data/05_model_input/train_set_oversampled.pq
   layer: model_input
+=======
+  filepath: data/07_model_output/unhcr_predictions.pq
+
+
+
+
+
+
+
+
+>>>>>>> 5954dc7b868f8e419c32aa5731f84837d215dcbd
 
