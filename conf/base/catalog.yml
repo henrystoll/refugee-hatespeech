@@ -4,65 +4,79 @@
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 
 
-train_cad:
+raw_train_cad:
   type: pandas.CSVDataSet
   filepath: data/01_raw/cad/cad_v1_1.tsv
   load_args:
     sep: '\t'
+  layer: raw
 
-train_civil:
+raw_train_civil:
   type: pandas.CSVDataSet
   filepath: data/01_raw/civil/civil_comments_v2.csv
+  layer: raw
 
-train_davidson:
+raw_train_davidson:
   type: pandas.CSVDataSet
   filepath: data/01_raw/davidson/labeled_data.csv
+  layer: raw
 
-train_dynhs:
+raw_train_dynhs:
   type: pandas.CSVDataSet
   filepath: data/01_raw/dynhs/dynhs-v0.2.3.csv
+  layer: raw
 
-train_ghc:
+raw_train_ghc:
   type: pandas.CSVDataSet
   filepath: data/01_raw/ghc/ghc_all.csv
+  layer: raw
 
-train_hasoc:
+raw_train_hasoc:
   type: pandas.CSVDataSet
   filepath: data/01_raw/hasoc2019/hasoc2019_all.csv
+  layer: raw
 
-train_hatemoji:
+raw_train_hatemoji:
   type: pandas.CSVDataSet
   filepath: data/01_raw/hatemoji/HatemojiTrain.csv
+  layer: raw
 
-train_hateval:
+raw_train_hateval:
   type: pandas.CSVDataSet
   filepath: data/01_raw/hateval2019/hateval_AB_en.csv
+  layer: raw
 
-train_hatexplain:
+raw_train_hatexplain:
   type: pandas.CSVDataSet
   filepath: data/01_raw/hatexplain/data.csv
+  layer: raw
   
-train_ousid:
+raw_train_ousid:
   type: pandas.CSVDataSet
   filepath: data/01_raw/ousid/ousid_raw.csv
+  layer: raw
 
-train_slur:
+raw_train_slur:
   type: pandas.CSVDataSet
   filepath: data/01_raw/slur/kurrek.2020.slur-corpus.csv
+  layer: raw
 
-train_wiki:
+raw_train_wiki:
   type: pandas.CSVDataSet
   filepath: data/01_raw/wikipedia/all-wikipedia.csv
+  layer: raw
 
 raw_hatecheck:
   type: pandas.CSVDataSet
   filepath: data/01_raw/hatecheck/test_suite_cases.csv
   load_args:
     sep: ';'
+  layer: raw
 
 raw_unhcr:
   type: pandas.ExcelDataSet
   filepath: data/01_raw/unhcr/refugee_data_unhcr.xlsx
+  layer: raw
 
 # predict_frame:
 #   type: pandas.CSVDataSet
@@ -71,29 +85,36 @@ raw_unhcr:
 model_input_combined:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/model_input_combined.pq
+  layer: primary
 
 test_hatecheck:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/hatecheck.pq
+  layer: primary
 
 test_unhcr:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/unhcr.pq
+  layer: primary
 
 
 train_set:
   type: pandas.ParquetDataSet
   filepath: data/05_model_input/train_set.pq
+  layer: model_input
 
 validation_set:
   type: pandas.ParquetDataSet
   filepath: data/05_model_input/validation_set.pq
+  layer: model_input
 
 test_set:
   type: pandas.ParquetDataSet
   filepath: data/05_model_input/test_set.pq
+  layer: model_input
 
-training_set_oversampled:
+train_set_oversampled:
   type: pandas.ParquetDataSet
-  filepath: data/05_model_input/training_set_oversampled.pq
+  filepath: data/05_model_input/train_set_oversampled.pq
+  layer: model_input
 

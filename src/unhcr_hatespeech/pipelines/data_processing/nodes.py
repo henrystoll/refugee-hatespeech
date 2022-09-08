@@ -6,8 +6,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
 
-def _clean_text(
-    series: pd.Series,
+def clean_text(
+    df: pd.DataFrame,
+    text_col="text",
     lower=True,
     user_mention=True,
     url=True,
@@ -16,27 +17,32 @@ def _clean_text(
     linebreak=True,
     blank_spaces=True,
     new_line=True,
-) -> pd.Series:
+) -> pd.DataFrame:
     """
-    input: Pandas Series
-    returns: cleaned text Pandas series
+    :param df: Pandas DataFrame
+    :param text_col: Name of the column containing the text
+    :param lower: Convert text to lower case
+    :param user_mention: Remove user mentions
+    :param url: Remove urls
+    :param hashtag: Remove hashtags
+    :param emoji_to_text: Convert emojis to text
+    :param linebreak: Remove linebreaks
+    :param blank_spaces: Remove blank spaces
+    :param new_line: Remove new line
+    :returns: Pandas DataFrame with cleaned text
     """
 
-    data = series.copy()
+    data = df.copy()
 
-    def replace_in_series(data: pd.Series, pattern: str, replacement: str):
-        # TODO: logging
-        # print(f"replacing {pattern} with {replacement}")
-        data = data.str.replace(pattern, replacement, regex=True)
+    def replace_text_in_df(data: pd.Series, pattern: str, replacement: str):
+        data[text_col] = data[text_col].str.replace(pattern, replacement, regex=True)
 
-    replace = partial(replace_in_series, data)
+    replace = partial(replace_text_in_df, data)
 
     if lower:
-        # Lower Case
-        data = data.str.lower()
+        data[text_col] = data[text_col].str.lower()
 
     if user_mention:
-        # User mention
         replace(r'@[A-Za-z0-9._!"#%£$&/{}()=?´*><\|:;]+', "@USER")
         replace("<user>", "@USER")
 
@@ -48,7 +54,7 @@ def _clean_text(
         replace("#", "")
 
     if emoji_to_text:
-        data = data.map(
+        data[text_col] = data[text_col].map(
             lambda row: " ".join([emoji.demojize(word) for word in row.split()])
         )
 
@@ -302,7 +308,7 @@ def _has_correct_columns(df: pd.DataFrame, labels: list) -> bool:
     return set(df.columns) == correct_columns
 
 
-def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
+def combine_training_datasets(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     labels = ["hate_speech", "offensive", "toxic"]
 
     for df in dfs:
@@ -326,8 +332,6 @@ def combine_and_clean_input(*dfs: list[pd.DataFrame]) -> pd.DataFrame:
     combined = combined.reset_index(drop=True)
     print("binarizing labels...")
     combined = _binarize_labels(combined, labels)
-    print("cleaning text...")
-    combined["text"] = _clean_text(combined["text"])
 
     # create label columns
     combined["label"] = [
@@ -389,8 +393,6 @@ def preprocess_hatecheck(df: pd.DataFrame) -> pd.DataFrame:
     df["target_ident"] = df["target_ident"].fillna("not specified")
     df["target_ident"] = df["target_ident"].replace("Muslims", "muslims")
 
-    df["text"] = _clean_text(df["text"])
-
     return df
 
 
@@ -401,8 +403,6 @@ def preprocess_unhcr(raw: pd.DataFrame) -> pd.DataFrame:
     df["label"] = 2
     df["dataset"] = "unhcr"
 
-    df["text"] = _clean_text(df["text"])
-    # TODO: test if columns are correctly formatted
     return df
 
 
