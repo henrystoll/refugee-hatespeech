@@ -1,6 +1,9 @@
 # UNHCR Hatespeech Detection
 
 **Creators:** Frederik Gaasdal Jensen & Henry Alexander Stoll
+**Model:** [Huggingface](https://huggingface.co/unhcr/hatespeech-detection)
+**Paper:** [Master Thesis.pdf](thesis.pdf)
+**Presentation:** [Thesis Defense Presentation](thesis-presentation.pdf)
 
 ## About this Repo
 
@@ -15,7 +18,7 @@ To understand Kedro better, take a look at [Kedro documentation](https://kedro.r
 This project provides **two pipelines**:
 
 1. Data Processing
-3. Model Inference
+2. Model Inference
 
 ### Data Processing
 
