@@ -4,6 +4,7 @@
 **Model:** [Huggingface](https://huggingface.co/unhcr/hatespeech-detection)
 **Paper:** [Master Thesis.pdf](thesis.pdf)
 **Presentation:** [Thesis Defense Presentation](thesis-presentation.pdf)
+**Raw Data:** [Download Datasets](https://stollfamily.de/01_raw.zip)
 
 ## About this Repo
 
