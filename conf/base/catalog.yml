@@ -108,6 +108,7 @@ validation_set:
 test_set:
   type: pandas.ParquetDataSet
   filepath: data/05_model_input/test_set.pq
+  layer: model_input
 
 test_hatecheck:
   type: pandas.ParquetDataSet
