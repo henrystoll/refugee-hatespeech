@@ -9,7 +9,7 @@ from .nodes import (
     clean_text,
     combine_training_datasets,
     preprocess_cad,
-    #preprocess_civil,
+    # preprocess_civil,
     preprocess_davidson,
     preprocess_dynhs,
     preprocess_ghc,
@@ -37,13 +37,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="preprocess_cad_node",
                 namespace="raw",
             ),
-           # node(
+            # node(
             #    func=preprocess_civil,
-             #   inputs="raw_train_civil",
-              #  outputs="preprocessed_civil",
-               # name="preprocess_civil_node",
-               # namespace="raw",
-            #),
+            #   inputs="raw_train_civil",
+            #  outputs="preprocessed_civil",
+            # name="preprocess_civil_node",
+            # namespace="raw",
+            # ),
             node(
                 func=preprocess_davidson,
                 inputs="raw_train_davidson",
@@ -132,7 +132,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 func=combine_training_datasets,
                 inputs=[
                     "preprocessed_cad",
-                    #"preprocessed_civil",
+                    # "preprocessed_civil",
                     "preprocessed_davidson",
                     "preprocessed_dynhs",
                     "preprocessed_ghc",
