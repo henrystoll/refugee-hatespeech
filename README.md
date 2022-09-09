@@ -120,7 +120,7 @@ pip install -r src/requirements.txt
 kedro info
 ```
 
-## How to run your Kedro project
+## How to run your Kedro project?
 
 You can run your Kedro project with:
 
@@ -144,7 +144,7 @@ kedro build-docs
 
 When this command has finished running, you will need to copy the path to the root folder of the project and add `docs/build/html/unhcr_hatespeech.html` to the path. This should then be inserted into your Web Browser, which will open the documentation in HTML format.
 
-## How to work with Kedro and notebooks
+## How to work with Kedro and notebooks?
 
 > Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, `catalog`, and `startup_error`.
 >
