@@ -1,4 +1,4 @@
-# UNHCR Hatespeech Detection
+# Refugee Hatespeech Detection
 
 **Creators:** Frederik Gaasdal Jensen & Henry Alexander Stoll
 **Model:** [Huggingface](https://huggingface.co/unhcr/hatespeech-detection)
